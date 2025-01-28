@@ -1,10 +1,12 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.practicahibernate;
 
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -19,11 +21,22 @@ public class PracticaHibernate {
 
         // Crear un departamento
         Departamento departamento = new Departamento();
-        departamento.setNombre("Matemáticas");
+        departamento.setNombre("TIC");
         session.save(departamento);
 
         // Confirmar la transacción
         session.getTransaction().commit();
+
+        //Consulta HQL
+        String hql = "FROM Profesor p WHERE p.departamento.nombre = :nombre";
+        Query query = session.createQuery(hql);
+        query.setParameter("nombre", "Matemáticas");
+        List<Profesor> profesores = query.list();
+
+        for (Profesor p : profesores) {
+            System.out.println(p);
+        }
+
         session.close();
 
         HibernateUtil.shutdown();

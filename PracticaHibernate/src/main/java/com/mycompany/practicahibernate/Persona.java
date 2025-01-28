@@ -140,6 +140,11 @@ public class Persona {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+ "|| Nif: "+nif+ "|| Fecha: "+fechaNacimiento+" || Direccion: "+direccion;
+    } 
     
     
 
