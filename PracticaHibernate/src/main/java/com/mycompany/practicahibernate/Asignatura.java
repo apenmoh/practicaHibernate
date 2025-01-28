@@ -1,18 +1,30 @@
 package com.mycompany.practicahibernate;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "asignatura")
 public class Asignatura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
+    @Column(name = "nombre", length=100)
     private String nombre;
+    @Column(name = "creditos")
     private float creditos;
+    @Column(name = "curso")
     private int curso;
+    @Column(name = "cuatrimestre")
     private int cuatrimestre;
+    @Column(name="tipo")
+    private String tipo;
 
     @ManyToOne
     @JoinColumn(name = "id_profesor")
