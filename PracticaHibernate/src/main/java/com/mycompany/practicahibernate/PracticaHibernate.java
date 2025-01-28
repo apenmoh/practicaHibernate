@@ -16,29 +16,36 @@ public class PracticaHibernate {
 
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
 
-        // Crear un departamento
-        Departamento departamento = new Departamento();
-        departamento.setNombre("TIC");
-        session.save(departamento);
+            // Crear un departamento
+            Departamento departamento = new Departamento();
+            departamento.setNombre("TIC");
+            session.save(departamento);
 
-        // Confirmar la transacción
-        session.getTransaction().commit();
+            // Confirmar la transacción
+            session.getTransaction().commit();
 
-        //Consulta HQL
-        String hql = "FROM Profesor p WHERE p.departamento.nombre = :nombre";
-        Query query = session.createQuery(hql);
-        query.setParameter("nombre", "Matemáticas");
-        List<Profesor> profesores = query.list();
+            //Consulta HQL
+            String hql = "FROM Profesor p WHERE p.departamento.nombre = :nombre";
+            Query query = session.createQuery(hql);
+            query.setParameter("nombre", "Matemáticas");
+            List<Profesor> profesores = query.list();
 
-        for (Profesor p : profesores) {
-            System.out.println(p);
+            for (Profesor p : profesores) {
+                System.out.println(p);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+        }finally{
+            session.close();
+            HibernateUtil.shutdown();
         }
-
-        session.close();
-
-        HibernateUtil.shutdown();
+        
     }
 }
