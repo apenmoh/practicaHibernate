@@ -1,5 +1,6 @@
 package com.mycompany.practicahibernate;
 
+import java.util.Date;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,34 +8,45 @@ import jakarta.persistence.*;
 public class curso_escolar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
-    private year anyo_inicio;
-    private year anyo_fin;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_inicio", nullable = false)
+    private Date fechaInicio;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_fin", nullable = false)
+    private Date fechaFin;
 
     public int getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public year getAnyo_inicio() {
-        return anyo_inicio;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setAnyo_inicio() {
-        this.anyo_inicio = anyo_inicio;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public year getAnyo_fin() {
-        return anyo_fin;
+    public Date getFechaFin() {
+        return fechaFin;
     }
 
-    public void setAnyo_fin() {
-        this.anyo_fin = anyo_fin;
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
-    
+    public void CursoEscolar() {}
+
+    public void CursoEscolar(Date fechaInicio, Date fechaFin) {
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+
 }
