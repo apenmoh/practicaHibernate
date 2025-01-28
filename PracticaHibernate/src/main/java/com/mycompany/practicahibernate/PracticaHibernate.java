@@ -4,13 +4,28 @@
 
 package com.mycompany.practicahibernate;
 
+import org.hibernate.Session;
+
 /**
  *
  * @author DAM
  */
 public class PracticaHibernate {
 
+    @SuppressWarnings("deprecation")
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        // Crear un departamento
+        Departamento departamento = new Departamento();
+        departamento.setNombre("Matemáticas");
+        session.save(departamento);
+
+        // Confirmar la transacción
+        session.getTransaction().commit();
+        session.close();
+
+        HibernateUtil.shutdown();
     }
 }
