@@ -6,7 +6,6 @@ package com.mycompany.practicahibernate;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 /**
  *
@@ -30,22 +29,20 @@ public class PracticaHibernate {
             session.getTransaction().commit();
 
             //Consulta HQL
-            String hql = "FROM Profesor p WHERE p.departamento.nombre = :nombre";
-            Query query = session.createQuery(hql);
-            query.setParameter("nombre", "Matemáticas");
-            List<Profesor> profesores = query.list();
+            String hql = "SELECT p.departamento.nombre, COUNT(p) FROM Profesor p GROUP BY p.departamento.nombre";
+            List<Object[]> resultados = session.createQuery(hql).list();
 
-            for (Profesor p : profesores) {
-                System.out.println(p);
+            for (Object[] fila : resultados) {
+                System.out.println("Departamento: " + fila[0] + ", Profesores: " + fila[1]);
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
 
-        }finally{
+        } finally {
             session.close();
             HibernateUtil.shutdown();
         }
-        
+
     }
 }
