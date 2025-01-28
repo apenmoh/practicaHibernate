@@ -48,5 +48,12 @@ public class curso_escolar {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
-
+    
+    @Override
+    public String toString() {
+        return "CursoEscolar{" 
+            + "id=" + id + 
+            ", fechaInicio=" + fechaInicio + 
+            ", fechaFin=" + fechaFin + '}';
+    }
 }

@@ -1,16 +1,27 @@
 package com.mycompany.practicahibernate;
 
-import jakarta.persistence.*;
+import java.util.List;
 
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "grado")
 public class Grado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
+
+    @Column(name = "nombre", length = 100)
     private String nombre;
+
+    @OneToMany(mappedBy = "grado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Asignatura> asignaturas;
+
+    public Grado() {}
+
+    public Grado(String nombre) {
+        this.nombre = nombre;
+    }
 
     public int getId() {
         return id;
@@ -28,6 +39,19 @@ public class Grado {
         this.nombre = nombre;
     }
 
-    
+    public List<Asignatura> getAsignaturas() { 
+        return asignaturas; 
+    }
+
+    public void setAsignaturas(List<Asignatura> asignaturas) { 
+        this.asignaturas = asignaturas; 
+    }
+
+    @Override
+    public String toString() {
+        return "Grado{" 
+            + "id=" + id + 
+            ", nombre=" + nombre + '}';
+    }
 }
 
