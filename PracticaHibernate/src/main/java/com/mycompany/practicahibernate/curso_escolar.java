@@ -26,6 +26,7 @@ public class curso_escolar {
     @Column(name = "fecha_fin", nullable = false)
     private Date fechaFin;
 
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -50,7 +51,9 @@ public class curso_escolar {
         this.fechaFin = fechaFin;
     }
 
-    public void CursoEscolar() {}
+    public void CursoEscolar() {
+        // Constructor vacío
+    }
 
     public void CursoEscolar(Date fechaInicio, Date fechaFin) {
         this.fechaInicio = fechaInicio;

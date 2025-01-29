@@ -25,12 +25,7 @@ public class Grado {
     @OneToMany(mappedBy = "grado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Asignatura> asignaturas;
 
-    public Grado() {}
-
-    public Grado(String nombre) {
-        this.nombre = nombre;
-    }
-
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -55,6 +50,14 @@ public class Grado {
         this.asignaturas = asignaturas; 
     }
 
+    public Grado() {
+        // Constructor vacío
+    }
+
+    public Grado(String nombre) {
+        this.nombre = nombre;
+    }
+    
     @Override
     public String toString() {
         return "Grado{" 

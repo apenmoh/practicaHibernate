@@ -38,18 +38,8 @@ public class Asignatura {
     @ManyToOne
     @JoinColumn(name = "id_grado")
     private Grado grado;
-
-    public Asignatura() {}
-
-    public Asignatura(String nombre, float creditos, String tipo, int curso, int cuatrimestre, Grado grado) {
-        this.nombre = nombre;
-        this.creditos = creditos;
-        this.tipo = tipo;
-        this.curso = curso;
-        this.cuatrimestre = cuatrimestre;
-        this.grado = grado;
-    }
     
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -96,6 +86,19 @@ public class Asignatura {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public Asignatura() {
+        // Constructor vacío
+    }
+
+    public Asignatura(String nombre, float creditos, String tipo, int curso, int cuatrimestre, Grado grado) {
+        this.nombre = nombre;
+        this.creditos = creditos;
+        this.tipo = tipo;
+        this.curso = curso;
+        this.cuatrimestre = cuatrimestre;
+        this.grado = grado;
     }
 
     @Override
