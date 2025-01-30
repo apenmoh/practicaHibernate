@@ -10,10 +10,12 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
-        <mapping class="com.universidad.model.Persona"/>
-        <mapping class="com.universidad.model.Profesor"/>
-        <mapping class="com.universidad.model.Asignatura"/>
-        <mapping class="com.universidad.model.Departamento"/>
-        <mapping class="com.universidad.model.Grado"/>
+        <mapping class="com.mycompany.practicahibernate.Asignatura"/>
+        <mapping class="com.mycompany.practicahibernate.Curs_Escola"/>
+        <mapping class="com.mycompany.practicahibernate.Departamento"/>
+        <mapping class="com.mycompany.practicahibernate.Estudiante"/>
+        <mapping class="com.mycompany.practicahibernate.Grado"/>
+        <mapping class="com.mycompany.practicahibernate.Persona"/>
+        <mapping class="com.mycompany.practicahibernate.Profesor"/>
     </session-factory>
 </hibernate-configuration>
