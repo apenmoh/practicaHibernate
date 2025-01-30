@@ -9,5 +9,11 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+
+        <mapping class="com.universidad.model.Persona"/>
+        <mapping class="com.universidad.model.Profesor"/>
+        <mapping class="com.universidad.model.Asignatura"/>
+        <mapping class="com.universidad.model.Departamento"/>
+        <mapping class="com.universidad.model.Grado"/>
     </session-factory>
 </hibernate-configuration>
