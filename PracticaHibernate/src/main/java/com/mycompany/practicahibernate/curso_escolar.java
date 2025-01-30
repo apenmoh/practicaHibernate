@@ -1,12 +1,14 @@
 package com.mycompany.practicahibernate;
 
 import java.util.Date;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -25,6 +27,9 @@ public class curso_escolar {
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_fin", nullable = false)
     private Date fechaFin;
+
+    @ManyToMany
+    private Set<Estudiante> estudiantes;
 
     // Getters y Setters
     public int getId() {
@@ -49,6 +54,14 @@ public class curso_escolar {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public Set<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(Set<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
     }
 
     public void CursoEscolar() {

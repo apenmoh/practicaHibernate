@@ -11,7 +11,7 @@
         <property name="hibernate.format_sql">true</property>
 
         <mapping class="com.mycompany.practicahibernate.Asignatura"/>
-        <mapping class="com.mycompany.practicahibernate.Curs_Escola"/>
+        <mapping class="com.mycompany.practicahibernate.curso_escolar"/>
         <mapping class="com.mycompany.practicahibernate.Departamento"/>
         <mapping class="com.mycompany.practicahibernate.Estudiante"/>
         <mapping class="com.mycompany.practicahibernate.Grado"/>
