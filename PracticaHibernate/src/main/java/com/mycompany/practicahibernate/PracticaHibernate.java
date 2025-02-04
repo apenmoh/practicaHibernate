@@ -29,7 +29,7 @@ public class PracticaHibernate {
             session.getTransaction().commit();
 
             //Consulta HQL
-            String hql = "SELECT p.departamento.nombre, COUNT(p) FROM Profesor p GROUP BY p.departamento.nombre";
+            String hql = "SELECT p.departamento.nombre, COUNT(p.id) FROM Profesor p GROUP BY p.departamento.nombre";
             List<Object[]> resultados = session.createQuery(hql).list();
 
             for (Object[] fila : resultados) {
@@ -40,7 +40,9 @@ public class PracticaHibernate {
             System.out.println(e.getMessage());
 
         } finally {
-            session.close();
+            if (session != null) {
+                session.close();
+            }
             HibernateUtil.shutdown();
         }
 
