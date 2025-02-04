@@ -31,7 +31,7 @@ public class PracticaHibernate {
 
             // Crear y guardar una nueva instancia de Persona
             Persona persona = new Persona();
-            persona.setNif("12345678C");
+            persona.setNif("12345678S");
             persona.setNombre("Juan");
             persona.setApellido1("Pérez");
             persona.setCiudad("Madrid");
@@ -60,19 +60,56 @@ public class PracticaHibernate {
             // Confirmar la transacción
             tx.commit();
 
-           // Consultas en HQL
-           List<Grado> grados = session.createQuery("FROM Grado", Grado.class).list();
-           System.out.println("Grados: " + grados);
+            // Consultas en HQL
+            List<Grado> grados = session.createQuery("FROM Grado", Grado.class).list();
+            System.out.println("Grados: " + grados);
 
-           List<Asignatura> asignaturas = session.createQuery("FROM Asignatura", Asignatura.class).list();
-           System.out.println("Asignaturas: " + asignaturas);
+            List<Asignatura> asignaturas = session.createQuery("FROM Asignatura", Asignatura.class).list();
+            System.out.println("Asignaturas: " + asignaturas);
 
-           // Consultas en SQL
-           List<Object[]> sqlQueryGrados = session.createNativeQuery("SELECT nombre FROM grado").list();
-           System.out.println("Grados (SQL): " + sqlQueryGrados);
+            // Consultas en SQL
+            List<Object[]> sqlQueryGrados = session.createNativeQuery("SELECT nombre FROM grado").list();
+            System.out.println("Grados (SQL): " + sqlQueryGrados);
 
-           List<Object[]> sqlQueryAsignaturas = session.createNativeQuery("SELECT nombre FROM asignatura").list();
-           System.out.println("Asignaturas (SQL): " + sqlQueryAsignaturas);
+            List<Object[]> sqlQueryAsignaturas = session.createNativeQuery("SELECT nombre FROM asignatura").list();
+            System.out.println("Asignaturas (SQL): " + sqlQueryAsignaturas);
+
+            // Actualizar una instancia que tenga relaciones
+            tx = session.beginTransaction();
+            Grado gradoToUpdate = session.find(Grado.class, grado.getId());
+            if (gradoToUpdate != null) {
+                // Actualizar el nombre del grado
+                gradoToUpdate.setNombre("Ingeniería de Software");
+
+                // Actualizar las asignaturas asociadas al grado
+                List<Asignatura> asignaturasToUpdate = session.createQuery("FROM Asignatura a WHERE a.grado.id = :gradoId", Asignatura.class)
+                        .setParameter("gradoId", gradoToUpdate.getId())
+                        .getResultList();
+                for (Asignatura asig : asignaturasToUpdate) {
+                    asig.setNombre(asig.getNombre() + " Avanzada");
+                    session.merge(asig);
+                }
+
+                // Guardar los cambios en el grado
+                session.merge(gradoToUpdate);
+            }
+            tx.commit();
+
+            // Eliminar una instancia que tenga relaciones
+            tx = session.beginTransaction();
+            Departamento deptoToDelete = session.find(Departamento.class, depto.getId());
+            if (deptoToDelete != null) {
+                // Eliminar los profesores asociados al departamento
+                List<Profesor> profesoresToDelete = session.createQuery("FROM Profesor p WHERE p.departamento.id = :deptoId", Profesor.class)
+                        .setParameter("deptoId", deptoToDelete.getId())
+                        .getResultList();
+                for (Profesor prof : profesoresToDelete) {
+                    session.remove(prof);
+                }
+                // Eliminar el departamento
+                session.remove(deptoToDelete);
+            }
+            tx.commit();
 
         } catch (Exception e) {
             e.printStackTrace();

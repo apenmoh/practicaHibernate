@@ -71,8 +71,7 @@ public class curso_escolar {
         this.estudiantes = estudiantes;
     }
 
-
-    public curso_escolar(Date fechaInicio, Date fechaFin) {
+    public void CursoEscolar(Date fechaInicio, Date fechaFin) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
