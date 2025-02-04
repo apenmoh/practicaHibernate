@@ -2,11 +2,10 @@ package com.mycompany.practicahibernate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,7 +13,6 @@ import jakarta.persistence.Table;
 public class Profesor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_profesor", nullable = false, unique = true)
     private int id;
 
@@ -24,6 +22,10 @@ public class Profesor {
     @ManyToOne
     @JoinColumn(name = "id_departamento")
     private Departamento departamento;
+
+    @OneToOne
+    @JoinColumn(name = "id_profesor", referencedColumnName = "id")
+    private Persona persona;
 
     public Profesor() {
         // Constructor vacío
@@ -52,6 +54,14 @@ public class Profesor {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @Override

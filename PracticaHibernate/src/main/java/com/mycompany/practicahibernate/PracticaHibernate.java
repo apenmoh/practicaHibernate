@@ -18,9 +18,10 @@ public class PracticaHibernate {
 
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
+        Session session = null;
         try {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             Transaction tx = session.beginTransaction();
 
             // Crear y guardar una nueva instancia de Departamento
@@ -30,7 +31,7 @@ public class PracticaHibernate {
 
             // Crear y guardar una nueva instancia de Persona
             Persona persona = new Persona();
-            persona.setNif("12345678A");
+            persona.setNif("12345678C");
             persona.setNombre("Juan");
             persona.setApellido1("Pérez");
             persona.setCiudad("Madrid");
@@ -45,6 +46,7 @@ public class PracticaHibernate {
             profesor.setId(persona.getId()); // Usar el ID de la persona creada
             profesor.setNombre("Juan Pérez");
             profesor.setDepartamento(depto);
+            profesor.setPersona(persona); // Establecer la relación con Persona
             session.save(profesor);
 
             // Crear y guardar un Grado
@@ -55,41 +57,29 @@ public class PracticaHibernate {
             Asignatura asignatura = new Asignatura("Programación", 6, "Obligatoria", 1, 1, grado);
             session.save(asignatura);
 
-            // Crear y guardar un Curso Escolar con fechas válidas
-            curso_escolar curso = new curso_escolar();
-            curso.setFechaInicio(new Date());
-            curso.setFechaFin(new Date());
-            session.save(curso);
-
-            // Consultas en HQL
-            List<Profesor> profesores = session.createQuery("FROM Profesor p WHERE p.departamento.nombre = 'Ciencias'", Profesor.class).list();
-            System.out.println("Profesores en Ciencias: " + profesores);
-
-            List<Object[]> groupByDept = session.createQuery("SELECT p.departamento.nombre, COUNT(p) FROM Profesor p GROUP BY p.departamento.nombre").list();
-            System.out.println("Número de profesores por departamento: " + groupByDept);
-
-            // Consultas en SQL
-            List<Object[]> sqlQuery1 = session.createNativeQuery("SELECT p.nombre, d.nombre FROM profesor p JOIN departamento d ON p.id_departamento = d.id").list();
-            System.out.println("Profesores y sus departamentos: " + sqlQuery1);
-
-            List<Object[]> sqlQuery2 = session.createNativeQuery("SELECT a.nombre, g.nombre FROM asignatura a JOIN grado g ON a.id_grado = g.id").list();
-            System.out.println("Asignaturas y sus grados: " + sqlQuery2);
-
-            // Actualizar una instancia
-            profesor.setNombre("Juan García");
-            session.update(profesor);
-
-            // Eliminar una instancia
-            session.delete(profesor);
-
+            // Confirmar la transacción
             tx.commit();
-            session.close();
-            HibernateUtil.shutdown();
+
+           // Consultas en HQL
+           List<Grado> grados = session.createQuery("FROM Grado", Grado.class).list();
+           System.out.println("Grados: " + grados);
+
+           List<Asignatura> asignaturas = session.createQuery("FROM Asignatura", Asignatura.class).list();
+           System.out.println("Asignaturas: " + asignaturas);
+
+           // Consultas en SQL
+           List<Object[]> sqlQueryGrados = session.createNativeQuery("SELECT nombre FROM grado").list();
+           System.out.println("Grados (SQL): " + sqlQueryGrados);
+
+           List<Object[]> sqlQueryAsignaturas = session.createNativeQuery("SELECT nombre FROM asignatura").list();
+           System.out.println("Asignaturas (SQL): " + sqlQueryAsignaturas);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
-
     }
 }
