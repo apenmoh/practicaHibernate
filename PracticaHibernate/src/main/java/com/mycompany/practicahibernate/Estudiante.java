@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -24,7 +26,12 @@ public class Estudiante {
     @Column(name = "edad")
     private int edad;
 
-    @ManyToMany(mappedBy = "estudiantes")
+    @ManyToMany
+    @JoinTable(
+            name = "curso_escolar_estudiante",
+            joinColumns = @JoinColumn(name = "estudiante_id"),
+            inverseJoinColumns = @JoinColumn(name = "curso_escolar_id")
+    )
     private Set<curso_escolar> cursos;
 
     public int getId() {

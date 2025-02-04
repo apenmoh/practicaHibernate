@@ -16,10 +16,12 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "curso_escolar")
 public class curso_escolar {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private int id;
-    
+
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_inicio", nullable = false)
     private Date fechaInicio;
@@ -28,8 +30,13 @@ public class curso_escolar {
     @Column(name = "fecha_fin", nullable = false)
     private Date fechaFin;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "cursos")
     private Set<Estudiante> estudiantes;
+
+    public curso_escolar() {
+        this.fechaInicio = new Date();
+        this.fechaFin = new Date();
+    }
 
     // Getters y Setters
     public int getId() {
@@ -64,20 +71,16 @@ public class curso_escolar {
         this.estudiantes = estudiantes;
     }
 
-    public void CursoEscolar() {
-        // Constructor vacío
-    }
-
     public void CursoEscolar(Date fechaInicio, Date fechaFin) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
-    
+
     @Override
     public String toString() {
-        return "CursoEscolar{" 
-            + "id=" + id + 
-            ", fechaInicio=" + fechaInicio + 
-            ", fechaFin=" + fechaFin + '}';
+        return "CursoEscolar{"
+                + "id=" + id
+                + ", fechaInicio=" + fechaInicio
+                + ", fechaFin=" + fechaFin + '}';
     }
 }
